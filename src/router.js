@@ -13,8 +13,8 @@ export default new Router({
       name: 'starships',
       component: Starships,
       props: (route) => {
-        const { filter } = route.query;
-        return { filter };
+        const { filter, pageUrl } = route.query;
+        return { filter, pageUrl };
       },
     },
     {

@@ -4,6 +4,7 @@ class Api {
   constructor(baseURL) {
     this.axiosInstance = axios.create({
       baseURL,
+      timeout: 10000,
     });
   }
 

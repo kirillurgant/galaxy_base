@@ -5,7 +5,7 @@
       :key="`${index}-starship`"
       class="starships-list__item"
     >
-      {{ item.name }}
+      <router-link :to="item.url">{{ item.name }}</router-link>
     </li>
   </ul>
 </template>

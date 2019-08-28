@@ -9,7 +9,10 @@ export default {
     try {
       const { data } = await api.getStarships({ url });
 
-      commit(mutationTypes.GET_STARSHIPS_SUCCESS, data);
+      commit(mutationTypes.GET_STARSHIPS_SUCCESS, {
+        ...data,
+        currentPage: url,
+      });
     } catch (err) {
       commit(mutationTypes.GET_STARSHIPS_ERROR, err.message || 'Failed to retrieve list');
     }

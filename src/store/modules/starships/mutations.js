@@ -10,11 +10,14 @@ export default {
     state.status = statusTypes.loading;
     state.errorMessage = '';
   },
-  [GET_STARSHIPS_SUCCESS](state, { results, next, previous }) {
+  [GET_STARSHIPS_SUCCESS](state, {
+    results, next, previous, currentPage,
+  }) {
     state.status = statusTypes.success;
     state.data = results;
     state.next = next;
     state.previous = previous;
+    state.currentPage = currentPage;
   },
   [GET_STARSHIPS_ERROR](state, errorMessage) {
     state.status = statusTypes.error;

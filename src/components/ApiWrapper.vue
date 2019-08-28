@@ -31,7 +31,7 @@ export default {
       return this.status === statusTypes.error;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
