@@ -7,12 +7,14 @@ class Api {
     });
   }
 
-  getStarships() {
-    return this.axiosInstance.get('/starships');
+  getStarships({ url }) {
+    const resultUrl = url || '/starships';
+    return this.axiosInstance.get(resultUrl);
   }
 
-  getStarshipById(id) {
-    return this.axiosInstance.get(`/starships/${id}`);
+  getStarshipById({ url, id }) {
+    const resultUrl = url || `/starships/${id}`;
+    return this.axiosInstance.get(resultUrl);
   }
 }
 
