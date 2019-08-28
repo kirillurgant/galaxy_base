@@ -12,6 +12,10 @@ export default new Router({
       path: '/',
       name: 'starships',
       component: Starships,
+      props: (route) => {
+        const { filter } = route.query;
+        return { filter };
+      },
     },
     {
       path: '/:id',

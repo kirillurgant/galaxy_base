@@ -2,7 +2,8 @@ import api from '@/api';
 import * as mutationTypes from './mutationTypes';
 
 export default {
-  async getStarships({ commit }, { url }) {
+  async getStarships({ commit }, params = {}) {
+    const { url } = params;
     commit(mutationTypes.GET_STARSHIPS);
 
     try {

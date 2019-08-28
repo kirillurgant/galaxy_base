@@ -1,23 +1,60 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  </div>
+  <api-wrapper :status="status" :error-message="errorMessage">
+    <div class="starships">
+      <div class="starships__input">
+        <input type="text" name="filter" id="filter" v-model="filterInput">
+      </div>
+      <div class="starships__list">
+        <starships-list :starships="starships" />
+      </div>
+    </div>
+  </api-wrapper>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import ApiWrapper from '@/components/ApiWrapper.vue';
+import StarshipsList from '@/components/StarshipsList.vue';
 
 export default {
   name: 'Starships',
   components: {
-    HelloWorld,
+    ApiWrapper,
+    StarshipsList,
   },
-  mounted() {
-    // TODO:
-    this.getStarships({ url: 'https://swapi.co/api/starships/?page=3' });
+  created() {
+    this.getStarships();
+  },
+  props: {
+    filter: {
+      type: String,
+      default: '',
+    },
+  },
+  computed: {
+    filterInput: {
+      get() {
+        return this.filter;
+      },
+      set(filter) {
+        const query = filter ? { filter } : {};
+        this.$router.replace({ name: 'starships', query });
+      },
+    },
+    ...mapState({
+      starships(state) {
+        const filter = this.filter.trim().toLowerCase();
+
+        return state.starships.data.filter((starship) => {
+          const starshipName = starship.name.trim().toLowerCase();
+
+          return starshipName.search(filter) !== -1;
+        });
+      },
+      status: (state) => state.starships.status,
+      errorMessage: (state) => state.starships.errorMessage,
+    }),
   },
   methods: {
     ...mapActions(['getStarships']),
