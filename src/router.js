@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Starships from './views/Starships.vue';
 
 Vue.use(Router);
 
@@ -10,16 +10,17 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      name: 'starships',
+      component: Starships,
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/:id',
+      name: 'starshipsItem',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/StarshipsItem.vue'),
     },
+    // TODO: 404 or redirect to root
   ],
 });
