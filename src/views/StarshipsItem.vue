@@ -5,7 +5,10 @@
         v-for="(item, key) in starships.item"
         :key="key"
       >
-        <p v-if="!Array.isArray(item)" :class="{ bold: key === 'name' }">{{ item }}</p>
+        <p v-if="!Array.isArray(item)">
+          {{ key }}: 
+          <span :class="['italic', { bold: key === 'name' }]">{{ item }}</span>
+        </p>
       </div>
     </div>
   </api-wrapper>
@@ -40,5 +43,9 @@ export default {
 .bold {
   font-weight: bold;
   color: darkblue;
+}
+
+.italic {
+  font-style: italic;
 }
 </style>
