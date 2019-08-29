@@ -9,7 +9,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/starships',
       name: 'starships',
       component: Starships,
       props: (route) => {
@@ -18,13 +18,20 @@ export default new Router({
       },
     },
     {
-      path: '/:id',
+      path: '/starships/:id',
       name: 'starshipsItem',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/StarshipsItem.vue'),
+      props: (route) => {
+        const { id } = route.params;
+        return { id };
+      },
     },
-    // TODO: 404 or redirect to root
+    {
+      path: '*',
+      redirect: '/starships',
+    },
   ],
 });

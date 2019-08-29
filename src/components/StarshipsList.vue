@@ -5,7 +5,9 @@
       :key="`${index}-starship`"
       class="starships-list__item"
     >
-      <router-link :to="item.url">{{ item.name }}</router-link>
+      <router-link :to="getUrl(item.url)">
+        {{ item.name }}
+      </router-link>
     </li>
   </ul>
 </template>
@@ -19,5 +21,25 @@ export default {
       default: () => [],
     },
   },
+  methods: {
+    getUrl(url) {
+      const { pathname } = new URL(url);
+      const id = pathname.split('/').reverse().find(item => item);
+
+      return `/starships/${id}`;
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.starships-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.starships-list__item {
+  margin-bottom: 10px;
+}
+</style>

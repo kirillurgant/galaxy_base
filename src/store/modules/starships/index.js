@@ -5,9 +5,12 @@ import actions from './actions';
 const initState = {
   status: statusTypes.loading,
   errorMessage: '',
-  data: [],
+  list: [],
+  item: {},
   next: '',
   previous: '',
+  currentPage: '',
+  currentItemId: '',
 };
 
 export default {

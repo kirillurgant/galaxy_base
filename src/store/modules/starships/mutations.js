@@ -1,26 +1,35 @@
 import * as statusTypes from '@/const/statusTypes';
 import {
-  GET_STARSHIPS,
-  GET_STARSHIPS_SUCCESS,
-  GET_STARSHIPS_ERROR,
+  FETCH_RESOURCE,
+  FETCH_RESOURCE_SUCCESS,
+  FETCH_RESOURCE_ERROR,
+  SET_STARSHIPS_LIST,
+  SET_STARSHIPS_ITEM,
 } from './mutationTypes';
 
 export default {
-  [GET_STARSHIPS](state) {
+  [FETCH_RESOURCE](state) {
     state.status = statusTypes.loading;
     state.errorMessage = '';
   },
-  [GET_STARSHIPS_SUCCESS](state, {
+  [FETCH_RESOURCE_SUCCESS](state) {
+    state.status = statusTypes.success;
+  },
+  [FETCH_RESOURCE_ERROR](state, errorMessage) {
+    state.status = statusTypes.error;
+    state.errorMessage = errorMessage;
+  },
+
+  [SET_STARSHIPS_LIST](state, {
     results, next, previous, currentPage,
   }) {
-    state.status = statusTypes.success;
-    state.data = results;
+    state.list = results;
     state.next = next;
     state.previous = previous;
     state.currentPage = currentPage;
   },
-  [GET_STARSHIPS_ERROR](state, errorMessage) {
-    state.status = statusTypes.error;
-    state.errorMessage = errorMessage;
+  [SET_STARSHIPS_ITEM](state, { data, id }) {
+    state.item = data;
+    state.currentItemId = id;
   },
 };

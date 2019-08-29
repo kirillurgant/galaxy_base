@@ -2,7 +2,7 @@
   <api-wrapper :status="starships.status" :error-message="starships.errorMessage">
     <div class="starships">
       <div class="starships__input">
-        <input type="text" name="filter" id="filter" v-model="filterInput">
+        <input type="text" name="filter" id="filter" placeholder="Фильтр" v-model="filterInput">
       </div>
       <div class="starships__list">
         <starships-list v-if="starshipsFiltered.length" :starships="starshipsFiltered" />
@@ -30,17 +30,17 @@ export default {
     Paginator,
   },
   created() {
-    const { currentPage } = this.starships;
-    if (currentPage && (currentPage === this.pageUrl)) return;
-
-    this.getStarships({ url: this.pageUrl });
+    this.getStarshipsHandler(this.pageUrl);
   },
   props: {
     filter: {
       type: String,
       default: '',
     },
-    pageUrl: String,
+    pageUrl: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     filterInput: {
@@ -61,7 +61,7 @@ export default {
       starshipsFiltered(state) {
         const filter = this.filter.trim().toLowerCase();
 
-        return state.starships.data.filter((starship) => {
+        return state.starships.list.filter((starship) => {
           const starshipName = starship.name.trim().toLowerCase();
 
           return starshipName.search(filter) !== -1;
@@ -79,6 +79,31 @@ export default {
 
       this.$router.push({ name: 'starships', query });
     },
+    getStarshipsHandler(pageUrl) {
+      const { currentPage } = this.starships;
+      if (this.starships.list.length && (currentPage === pageUrl)) return;
+
+      this.getStarships({ url: pageUrl });
+    },
+  },
+  watch: {
+    pageUrl(val) {
+      this.getStarshipsHandler(val);
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.starships__input, .starships__list {
+  margin-bottom: 20px;
+}
+
+#filter {
+  width: 100%;
+  height: 30px;
+  padding: 5px 10px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+}
+</style>
